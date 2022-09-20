@@ -1,0 +1,22 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio
+  namespace: common
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`s3.mayongcong.net`) || Host(`oss.mayongcong.net`)
+      priority: 10
+      services:
+        - name: minio
+          port: 9001
+    - kind: Rule
+      match: Host(`s3-api.mayongcong.net`) || Host(`oss-api.mayongcong.net`)
+      priority: 10
+      services:
+        - name: minio
+          port: 9000

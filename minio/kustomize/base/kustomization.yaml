@@ -1,0 +1,15 @@
+namespace: common
+
+secretGenerator:
+  - name: minio-secret
+    literals:
+      - root-user=admin
+      - root-password=12345678
+
+helmCharts:
+  - name: minio
+    repo: https://charts.bitnami.com/bitnami
+    version: 11.10.2
+    releaseName: minio
+    namespace: common
+    valuesFile: minio/values.yaml

@@ -1,0 +1,10 @@
+mode: standalone
+
+auth:
+  existingSecret: minio-secret
+
+service:
+  type: ClusterIP
+
+persistence:
+  storageClass: local-path
