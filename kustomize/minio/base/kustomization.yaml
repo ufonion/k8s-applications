@@ -5,6 +5,8 @@ secretGenerator:
     literals:
       - root-user=admin
       - root-password=12345678
+    options:
+      disableNameSuffixHash: true
 
 helmCharts:
   - name: minio
