@@ -7,4 +7,4 @@ service:
   type: ClusterIP
 
 persistence:
-  storageClass: local-path
+  size: 20Gi

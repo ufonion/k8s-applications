@@ -13,6 +13,12 @@ configMapGenerator:
     options:
       disableNameSuffixHash: true
     behavior: replace
+  - name: argocd-cmd-params-cm
+    envs:
+      - argocd-cmd-params-cm.env
+    options:
+      disableNameSuffixHash: true
+    behavior: replace
 
 patchesStrategicMerge:
   - deployments.yaml
