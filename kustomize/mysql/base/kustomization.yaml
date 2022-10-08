@@ -1,0 +1,18 @@
+namespace: common
+
+secretGenerator:
+  - name: mysql-secret
+    literals:
+      - mysql-root-password=12345678
+      - mysql-replication-password=12345678
+      - mysql-password=12345678
+    options:
+      disableNameSuffixHash: true
+
+helmCharts:
+  - name: mysql
+    repo: https://charts.bitnami.com/bitnami
+    version: 9.3.4
+    releaseName: mysql
+    namespace: common
+    valuesFile: mysql/values.yaml
