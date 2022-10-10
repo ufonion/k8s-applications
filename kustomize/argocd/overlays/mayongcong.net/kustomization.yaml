@@ -8,6 +8,8 @@ configMapGenerator:
     options:
       disableNameSuffixHash: true
   - name: argocd-cm
+    files:
+      - configManagementPlugins
     envs:
       - argocd-cm.env
     options:
@@ -19,6 +21,7 @@ configMapGenerator:
     options:
       disableNameSuffixHash: true
     behavior: replace
+    
 
 patchesStrategicMerge:
   - deployments.yaml

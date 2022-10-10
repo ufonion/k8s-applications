@@ -1,0 +1,14 @@
+bases:
+  - ../mayongcong.net
+
+configMapGenerator:
+  - name: argocd-proxy
+    envs:
+      - proxy.env
+    options:
+      disableNameSuffixHash: true
+    behavior: replace
+
+patchesStrategicMerge:
+  - ingressroutes.yaml
+    

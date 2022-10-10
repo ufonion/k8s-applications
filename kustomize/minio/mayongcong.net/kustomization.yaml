@@ -1,0 +1,7 @@
+bases:
+  - ../base
+
+resources:
+  - secrets.yaml
+  - ingressroutes.yaml
+  - certificates.yaml

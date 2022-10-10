@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: minio
+spec:
+  dnsNames:
+    - s3.nghz.net
+    - oss.nghz.net
+    - s3-api.nghz.net
+    - oss-api.nghz.net
+  secretName: minio
+  issuerRef:
+    name: selfsigned # Use the issuer created previously
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned
+spec:
+  selfSigned: {}
