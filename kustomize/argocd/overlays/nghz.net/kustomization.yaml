@@ -1,5 +1,5 @@
 bases:
-  - ../mayongcong.net
+  - ../../base
 
 configMapGenerator:
   - name: argocd-proxy
@@ -7,8 +7,25 @@ configMapGenerator:
       - proxy.env
     options:
       disableNameSuffixHash: true
+  - name: argocd-cm
+    files:
+      - configManagementPlugins
+    envs:
+      - argocd-cm.env
+    options:
+      disableNameSuffixHash: true
     behavior: replace
+  - name: argocd-cmd-params-cm
+    envs:
+      - argocd-cmd-params-cm.env
+    options:
+      disableNameSuffixHash: true
+    behavior: replace
+    
 
 patchesStrategicMerge:
+  - deployments.yaml
+
+resources:
   - ingressroutes.yaml
     
