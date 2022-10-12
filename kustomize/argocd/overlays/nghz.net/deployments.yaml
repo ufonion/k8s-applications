@@ -43,6 +43,9 @@ spec:
           env:
             - name: AVP_VERSION
               value: "1.7.0"
+          envFrom:
+            - configMapRef:
+                name: argocd-proxy
           args:
             - >-
               wget -O argocd-vault-plugin
