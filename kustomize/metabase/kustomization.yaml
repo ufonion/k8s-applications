@@ -1,0 +1,8 @@
+resources:
+  - configurations.yaml
+  - metabase.yaml
+  - traefik-ingress.yaml
+
+images:
+  - name: research-cloud-book
+    newName: 192.168.110.156:5000/research-cloud-book
