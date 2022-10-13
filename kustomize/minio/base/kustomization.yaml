@@ -3,4 +3,5 @@ helmCharts:
     repo: https://charts.bitnami.com/bitnami
     version: 11.10.2
     releaseName: minio
+    namespace: common
     valuesFile: minio/values.yaml
