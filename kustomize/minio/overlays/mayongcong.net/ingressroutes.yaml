@@ -40,7 +40,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`s3.mayongcong.net`) || Host(`oss.mayongcong.net`)
-      priority: 10
+      priority: 1
+      middlewares:
+        - name: redirect-https
       services:
         - name: minio
           port: 9001
@@ -50,7 +52,9 @@ spec:
           scheme: http
     - kind: Rule
       match: Host(`s3-api.mayongcong.net`) || Host(`oss-api.mayongcong.net`)
-      priority: 10
+      priority: 1
+      middlewares:
+        - name: redirect-https
       services:
         - name: minio
           port: 9000

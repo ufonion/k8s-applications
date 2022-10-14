@@ -11,7 +11,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: metabase
+  name: metabase-legacy
   namespace: research-cloud
 spec:
   entryPoints:
@@ -25,3 +25,19 @@ spec:
           port: 3000
       middlewares:
         - name: metabase
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: metabase
+  namespace: research-cloud
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`metabase.nghz.net`)
+      priority: 10
+      services:
+        - name: metabase
+          port: 3000
