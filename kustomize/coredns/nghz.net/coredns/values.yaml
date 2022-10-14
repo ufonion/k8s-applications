@@ -196,7 +196,6 @@ zoneFiles:
      nghz.net.          IN NS  b.iana-servers.net.
      nghz.net.          IN NS  a.iana-servers.net.
      argocd.nghz.net.   IN A   192.168.110.200
-     s3.nghz.net.       IN A   192.168.110.204
      vault.nghz.net.    IN A   192.168.110.202
      *.nghz.net.        IN A   192.168.110.200
 
