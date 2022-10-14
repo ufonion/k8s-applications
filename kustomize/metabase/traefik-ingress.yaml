@@ -1,32 +1,4 @@
 apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: metabase-strip-prefix
-  namespace: research-cloud
-spec:
-  stripPrefix:
-    prefixes:
-      - /metabase
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: metabase-legacy
-  namespace: research-cloud
-spec:
-  entryPoints:
-    - web
-  routes:
-    - kind: Rule
-      match: PathPrefix(`/metabase`)
-      priority: 10
-      services:
-        - name: metabase
-          port: 3000
-      middlewares:
-        - name: metabase-strip-prefix
----
-apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: metabase-redirect-http
@@ -63,3 +35,5 @@ spec:
       services:
         - name: metabase
           port: 3000
+  tls:
+    secretName: research-cloud-certificates
