@@ -1,14 +1,15 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: minio
+  name: common-certificates
+  namespace: common
 spec:
   dnsNames:
+    - vault.nghz.net
     - s3.nghz.net
-    - oss.nghz.net
-    - s3-api.nghz.net
-    - oss-api.nghz.net
-  secretName: minio
+    - metabase.nghz.net
+    - book.nghz.net
+  secretName: common-certificates
   issuerRef:
     name: ca # Use the issuer created previously
     kind: ClusterIssuer

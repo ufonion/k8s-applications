@@ -20,15 +20,7 @@ spec:
         - name: minio
           port: 9000
   tls:
-    secretName: minio
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: redirect-https
-spec:
-  redirectScheme:
-    scheme: https
+    secretName: common-certificates
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
