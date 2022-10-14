@@ -7,9 +7,22 @@ spec:
   dnsNames:
     - vault.nghz.net
     - s3.nghz.net
-    - metabase.nghz.net
-    - book.nghz.net
+    - s3-api.nghz.net
   secretName: common-certificates
+  issuerRef:
+    name: ca # Use the issuer created previously
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: research-cloud-certificates
+  namespace: research-cloud
+spec:
+  dnsNames:
+    - book.nghz.net
+    - metabase.nghz.net
+  secretName: research-cloud-certificates
   issuerRef:
     name: ca # Use the issuer created previously
     kind: ClusterIssuer

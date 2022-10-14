@@ -3,4 +3,5 @@ bases:
 
 resources:
   - secrets.yaml
-  - ingressroutes.yaml
+  # - ingressroutes.yaml
+  - ingresses.yaml
