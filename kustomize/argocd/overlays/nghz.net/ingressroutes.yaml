@@ -46,9 +46,5 @@ spec:
       middlewares:
         - name: redirect-https
       services:
-        - name: minio
-          port: 9001
-          passHostHeader: true
-          responseForwarding:
-            flushInterval: 1ms
-          scheme: http
+        - name: argocd-server
+          port: 80
