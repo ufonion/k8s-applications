@@ -1,4 +1,5 @@
 resources:
   - configurations.yaml
   - metabase.yaml
-  - traefik-ingress.yaml
+  # - traefik-ingress.yaml
+  - ingresses.yaml

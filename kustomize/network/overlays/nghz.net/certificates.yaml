@@ -8,6 +8,7 @@ spec:
     - vault.nghz.net
     - s3.nghz.net
     - s3-api.nghz.net
+    - vault.nghz.net
   secretName: common-certificates
   issuerRef:
     name: ca # Use the issuer created previously

@@ -16,3 +16,4 @@ metadata:
 stringData:
   tls.crt: <ca.pem>
   tls.key: <ca-key.pem>
+---
