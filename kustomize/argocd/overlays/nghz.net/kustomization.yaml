@@ -27,5 +27,8 @@ patchesStrategicMerge:
   - deployments.yaml
 
 resources:
-  - ingressroutes.yaml
+  - certificates.yaml
+  # - ingressroutes.yaml
+  - ingresses.yaml
+
     
