@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vault-https
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+  - hosts:
+      - vault.nghz.net
+    secretName: common-certificates
+  rules:
+  - host: vault.nghz.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vault
+            port:
+              number: 8200
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vault
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-http-to-https@kubernetescrd
+spec:
+  rules:
+  - host: vault.nghz.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vault
+            port:
+              number: 8200
