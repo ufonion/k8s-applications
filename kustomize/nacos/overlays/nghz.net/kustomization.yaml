@@ -1,2 +1,8 @@
+bases:
+  - ../../base
+
 resources:
   - ingresses.yaml
+
+patchesStrategicMerge:
+  - configmaps.yaml
