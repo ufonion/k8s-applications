@@ -20,15 +20,7 @@ spec:
         - name: minio
           port: 9000
   tls:
-    secretName: minio
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: redirect-https
-spec:
-  redirectScheme:
-    scheme: https
+    secretName: common-certificates
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -40,7 +32,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`s3.mayongcong.net`) || Host(`oss.mayongcong.net`)
-      priority: 10
+      priority: 1
+      middlewares:
+        - name: redirect-https
       services:
         - name: minio
           port: 9001
@@ -50,7 +44,9 @@ spec:
           scheme: http
     - kind: Rule
       match: Host(`s3-api.mayongcong.net`) || Host(`oss-api.mayongcong.net`)
-      priority: 10
+      priority: 1
+      middlewares:
+        - name: redirect-https
       services:
         - name: minio
           port: 9000

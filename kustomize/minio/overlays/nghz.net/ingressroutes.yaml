@@ -1,0 +1,57 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-https
+  namespace: common
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`s3.nghz.net`) || Host(`oss.nghz.net`)
+      priority: 10
+      services:
+        - name: minio
+          port: 9001
+    - kind: Rule
+      match: Host(`s3-api.nghz.net`) || Host(`oss-api.nghz.net`)
+      priority: 10
+      services:
+        - name: minio
+          port: 9000
+  tls:
+    secretName: common-certificates
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-http-redirect
+spec:
+  entryPoints:
+  - web
+  routes:
+    - kind: Rule
+      match: Host(`s3.nghz.net`) || Host(`oss.nghz.net`)
+      priority: 1
+      middlewares:
+        - name: redirect-https
+      services:
+        - name: minio
+          port: 9001
+          passHostHeader: true
+          responseForwarding:
+            flushInterval: 1ms
+          scheme: http
+    - kind: Rule
+      match: Host(`s3-api.nghz.net`) || Host(`oss-api.nghz.net`)
+      priority: 1
+      middlewares:
+        - name: redirect-https
+      services:
+        - name: minio
+          port: 9000
+          passHostHeader: true
+          responseForwarding:
+            flushInterval: 1ms
+          scheme: http
+    

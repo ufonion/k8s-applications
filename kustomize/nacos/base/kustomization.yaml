@@ -1,0 +1,7 @@
+helmCharts:
+  - name: nacos
+    repo: https://bytectl.github.io/helm-charts
+    version: 0.1.6
+    releaseName: nacos
+    namespace: common
+    valuesFile: nacos/values.yaml

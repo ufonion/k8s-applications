@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metabase
+  namespace: research-cloud
+  labels:
+    app: metabase
+spec:
+  selector:
+    matchLabels:
+      app: metabase
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: metabase
+    spec:
+      containers:
+        - name: metabase
+          image: metabase/metabase:latest
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: metabase
+            - configMapRef:
+                name: metabase
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 2000m
+              memory: 1000Mi
+          ports:
+            - containerPort: 3000
+              name: web
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metabase
+  namespace: research-cloud
+spec:
+  selector:
+    app: metabase
+  type: ClusterIP
+  ports:
+    - name: web
+      protocol: TCP
+      port: 3000
+      targetPort: web
