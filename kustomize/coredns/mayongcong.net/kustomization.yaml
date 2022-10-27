@@ -1,0 +1,7 @@
+helmCharts:
+- name: coredns
+  repo: https://coredns.github.io/helm
+  version: 1.19.5
+  releaseName: coredns
+  # namespace: common
+  valuesFile: coredns/values.yaml
