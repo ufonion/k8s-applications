@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nacos-https
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+  - hosts:
+    - nacos.mayongcong.net
+    secretName: common-certificates
+  rules:
+  - host: nacos.mayongcong.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nacos-cs
+            port:
+              number: 8848
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nacos
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-redirect-http-to-https@kubernetescrd
+spec:
+  rules:
+  - host: nacos.mayongcong.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nacos-cs
+            port:
+              number: 8848

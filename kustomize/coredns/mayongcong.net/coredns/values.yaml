@@ -126,7 +126,7 @@ servers:
   # - name: file
   #   parameters: /etc/coredns/mayongcong.net.db mayongcong.net
   - name: forward
-    parameters: . /etc/resolv.conf
+    parameters: . 192.168.110.1
   - name: cache
     parameters: 30
   - name: loop
@@ -138,12 +138,22 @@ servers:
   plugins:
   - name: forward
     parameters: . 192.168.110.205
+  - name: cache
+    parameters: 30
+  - name: loop
+  - name: reload
+  - name: loadbalance
 - zones:
   - zone: mayongcong.net
   port: 53
   plugins:
   - name: file
     parameters: /etc/coredns/mayongcong.net.db mayongcong.net
+  - name: cache
+    parameters: 30
+  - name: loop
+  - name: reload
+  - name: loadbalance
 
 # Complete example with all the options:
 # - zones:                 # the `zones` block can be left out entirely, defaults to "."

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpstub
+spec:
+  selector:
+    matchLabels:
+      app: httpstub
+  template:
+    metadata:
+      labels:
+        app: httpstub
+    spec:
+      containers:
+      - name: httpstub
+        image: httpstub:latest
+        # resources:
+        #   limits:
+        #     memory: "1024Gi"
+        #     cpu: "1G"
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpstub
+spec:
+  selector:
+    app: httpstub
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: http
