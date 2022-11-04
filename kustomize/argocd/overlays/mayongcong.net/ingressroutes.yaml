@@ -30,7 +30,7 @@ spec:
       port: 80
       scheme: h2c
   tls:
-    secretName: argocd-certificate
+    secretName: argocd.mayongcong.net
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

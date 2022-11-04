@@ -197,6 +197,10 @@ zoneFiles:
     nghz.net.          IN NS  a.iana-servers.net.
     *.nghz.net.        IN A   192.168.110.200
     apicurio.nghz.net. IN A   192.168.110.156
+    mysql.nghz.net.    IN CNAME mysql-master.nghz.net.
+    mysql-master.nghz.net.       IN A 192.168.110.207
+    mysql-slave.nghz.net. IN A   192.168.110.206
+    nacos-cs.nghz.net. IN A   192.168.110.209
 
 # optional array of extra volumes to create
 extraVolumes: []

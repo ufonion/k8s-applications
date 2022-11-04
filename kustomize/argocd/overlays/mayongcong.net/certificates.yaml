@@ -1,11 +1,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: argocd-certificate
+  name: argocd-certificates
 spec:
   dnsNames:
   - argocd.mayongcong.net
-  secretName: argocd-certificate
+  secretName: argocd.mayongcong.net
   issuerRef:
     name: ca # Use the issuer created previously
     kind: ClusterIssuer

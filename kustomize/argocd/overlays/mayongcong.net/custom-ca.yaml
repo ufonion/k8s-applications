@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-ca
+  annotations:
+    avp.kubernetes.io/path: "nghz.net/data/certificates"
+data:
+  nghz.net.crt: <ca.pem>

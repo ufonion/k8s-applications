@@ -1,0 +1,29 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: common-certificates
+  namespace: common
+spec:
+  dnsNames:
+  - vault.mayongcong.net
+  - s3.mayongcong.net
+  - s3-api.mayongcong.net
+  - vault.mayongcong.net
+  secretName: common-certificates
+  issuerRef:
+    name: ca # Use the issuer created previously
+    kind: ClusterIssuer
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: research-cloud-certificates
+#   namespace: research-cloud
+# spec:
+#   dnsNames:
+#     - book.mayongcong.net
+#     - metabase.mayongcong.net
+#   secretName: research-cloud-certificates
+#   issuerRef:
+#     name: ca # Use the issuer created previously
+#     kind: ClusterIssuer
+---

@@ -1,0 +1,6 @@
+bases:
+  - ../../base
+
+resources:
+  - ingresses.yaml
+  - agent-lb.yaml

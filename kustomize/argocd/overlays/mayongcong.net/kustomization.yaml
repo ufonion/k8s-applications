@@ -24,9 +24,11 @@ configMapGenerator:
 
 
 patchesStrategicMerge:
-- deployments.yaml
+- argocd-server.yaml
+- argocd-repo-server.yaml
 
 resources:
+- custom-ca.yaml
 - certificates.yaml
 - ingressroutes.yaml
 
