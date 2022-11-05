@@ -1,31 +1,34 @@
 bases:
-  - ../../base
+- ../../base
 
 configMapGenerator:
-  - name: argocd-proxy
-    envs:
-      - proxy.env
-    options:
-      disableNameSuffixHash: true
-  - name: argocd-cm
-    files:
-      - configManagementPlugins
-    envs:
-      - argocd-cm.env
-    options:
-      disableNameSuffixHash: true
-    behavior: replace
-  - name: argocd-cmd-params-cm
-    envs:
-      - argocd-cmd-params-cm.env
-    options:
-      disableNameSuffixHash: true
-    behavior: replace
-    
+- name: argocd-proxy
+  envs:
+  - proxy.env
+  options:
+    disableNameSuffixHash: true
+- name: argocd-cm
+  files:
+  - configManagementPlugins
+  envs:
+  - argocd-cm.env
+  options:
+    disableNameSuffixHash: true
+  behavior: replace
+- name: argocd-cmd-params-cm
+  envs:
+  - argocd-cmd-params-cm.env
+  options:
+    disableNameSuffixHash: true
+  behavior: replace
+
 
 patchesStrategicMerge:
-  - deployments.yaml
+- argocd-server.yaml
+- argocd-repo-server.yaml
 
 resources:
-  - ingressroutes.yaml
-    
+- custom-ca.yaml
+- certificates.yaml
+- ingressroutes.yaml
+

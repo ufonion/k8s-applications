@@ -1,0 +1,63 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homarr-https
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+  - hosts:
+    - homarr.nghz.net
+    secretName: homarr-certificates
+  rules:
+  - host: homarr.nghz.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: homarr
+            port:
+              name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homarr
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-http-to-https@kubernetescrd
+spec:
+  tls:
+  - hosts:
+    - homarr.nghz.net
+    secretName: homarr-certificates
+  rules:
+  - host: homarr.nghz.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: homarr
+            port:
+              name: http
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: homarr-certificates
+spec:
+  dnsNames:
+  - homarr.nghz.net
+  secretName: homarr-certificates
+  issuerRef:
+    name: ca # Use the issuer created previously
+    kind: ClusterIssuer

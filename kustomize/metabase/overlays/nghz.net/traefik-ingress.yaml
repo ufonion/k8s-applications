@@ -1,0 +1,63 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: metabase-https
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+  - hosts:
+    - metabase.nghz.net
+    secretName: metabase-certificates
+  rules:
+  - host: metabase.nghz.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: metabase
+            port:
+              name: web
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: metabase
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-http-to-https@kubernetescrd
+spec:
+  tls:
+  - hosts:
+    - metabase.nghz.net
+    secretName: metabase-certificates
+  rules:
+  - host: metabase.nghz.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: metabase
+            port:
+              name: web
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: metabase-certificates
+spec:
+  dnsNames:
+  - metabase.nghz.net
+  secretName: metabase-certificates
+  issuerRef:
+    name: ca # Use the issuer created previously
+    kind: ClusterIssuer

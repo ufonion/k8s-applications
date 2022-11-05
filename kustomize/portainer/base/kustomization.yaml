@@ -1,0 +1,7 @@
+helmCharts:
+  - name: portainer
+    repo: https://portainer.github.io/k8s/
+    version: 1.0.35
+    releaseName: portainer
+    namespace: portainer
+    valuesFile: portainer/values.yaml

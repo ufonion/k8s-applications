@@ -1,0 +1,4 @@
+resources:
+- cluster-issuer.yaml
+# - certificates.yaml
+- middlewares.yaml

@@ -1,9 +1,24 @@
+# Default values for coredns.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: coredns/coredns
+  tag: "1.9.3"
+  pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistryKeySecretName
+
 replicaCount: 1
 
 resources:
   limits:
-    cpu: 1000m
-    memory: 1024Mi
+    cpu: 100m
+    memory: 128Mi
   requests:
     cpu: 100m
     memory: 128Mi
@@ -77,7 +92,7 @@ rbac:
   # name:
 
 # isClusterService specifies whether chart should be deployed as cluster-service or normal k8s app.
-isClusterService: false
+isClusterService: true
 
 # Optional priority class to be used for the coredns pods. Used for autoscaler if autoscaler.priorityClassName not set.
 priorityClassName: ""
@@ -108,10 +123,32 @@ servers:
   # Serves a /metrics endpoint on :9153, required for serviceMonitor
   - name: prometheus
     parameters: 0.0.0.0:9153
-  - name: file
-    parameters: /etc/coredns/nghz.net.db nghz.net
+  # - name: file
+  #   parameters: /etc/coredns/mayongcong.net.db mayongcong.net
   - name: forward
-    parameters: . 114.114.114.114 119.29.29.29 223.5.5.5
+    parameters: . 192.168.110.1
+  - name: cache
+    parameters: 30
+  - name: loop
+  - name: reload
+  - name: loadbalance
+- zones:
+  - zone: nghz.net
+  port: 53
+  plugins:
+  - name: forward
+    parameters: . 192.168.110.205
+  - name: cache
+    parameters: 30
+  - name: loop
+  - name: reload
+  - name: loadbalance
+- zones:
+  - zone: mayongcong.net
+  port: 53
+  plugins:
+  - name: file
+    parameters: /etc/coredns/mayongcong.net.db mayongcong.net
   - name: cache
     parameters: 30
   - name: loop
@@ -189,18 +226,21 @@ podDisruptionBudget: {}
 
 # configure custom zone files as per https://coredns.io/2017/05/08/custom-dns-entries-for-kubernetes/
 zoneFiles:
-- filename: nghz.net.db
-  domain: nghz.net
+# - filename: nghz.net.db
+#   domain: nghz.net
+#   contents: |
+#     nghz.net.          IN SOA sns.dns.icann.com. noc.dns.icann.com. 2015082541 7200 3600 1209600 3600
+#     nghz.net.          IN NS  b.iana-servers.net.
+#     nghz.net.          IN NS  a.iana-servers.net.
+#     *.nghz.net.        IN A   192.168.110.200
+- filename: mayongcong.net.db
+  domain: mayongcong.net
   contents: |
-    nghz.net.          IN SOA sns.dns.icann.com. noc.dns.icann.com. 2015082541 7200 3600 1209600 3600
-    nghz.net.          IN NS  b.iana-servers.net.
-    nghz.net.          IN NS  a.iana-servers.net.
-    *.nghz.net.        IN A   192.168.110.200
-    apicurio.nghz.net. IN A   192.168.110.156
-    mysql.nghz.net.    IN CNAME mysql-master.nghz.net.
-    mysql-master.nghz.net.       IN A 192.168.110.207
-    mysql-slave.nghz.net. IN A   192.168.110.206
-    nacos-cs.nghz.net. IN A   192.168.110.209
+    mayongcong.net.          IN SOA sns.dns.icann.com. noc.dns.icann.com. 2015082541 7200 3600 1209600 3600
+    mayongcong.net.          IN NS  b.iana-servers.net.
+    mayongcong.net.          IN NS  a.iana-servers.net.
+    ns.mayongcong.net.       IN A   192.168.188.100
+    *.mayongcong.net.        IN A   192.168.188.150
 
 # optional array of extra volumes to create
 extraVolumes: []
@@ -228,25 +268,25 @@ customAnnotations: {}
 ## Alternative configuration for HPA deployment if wanted
 #
 hpa:
-  enabled: true
+  enabled: false
   minReplicas: 1
-  maxReplicas: 3
-  metrics: {}
+  maxReplicas: 2
+  metrics: []
 
 ## Configue a cluster-proportional-autoscaler for coredns
 # See https://github.com/kubernetes-incubator/cluster-proportional-autoscaler
 autoscaler:
   # Enabled the cluster-proportional-autoscaler
-  enabled: true
+  enabled: false
 
   # Number of cores in the cluster per coredns replica
   coresPerReplica: 256
   # Number of nodes in the cluster per coredns replica
   nodesPerReplica: 16
   # Min size of replicaCount
-  min: 1
+  min: 0
   # Max size of replicaCount (default of 0 is no max)
-  max: 3
+  max: 0
   # Whether to include unschedulable nodes in the nodes/cores calculations - this requires version 1.8.0+ of the autoscaler
   includeUnschedulableNodes: false
   # If true does not allow single points of failure to form

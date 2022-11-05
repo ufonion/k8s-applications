@@ -1,0 +1,7 @@
+images:
+- name: httpstub
+  newName: 192.168.188.2:5000/httpstub
+
+resources:
+- deployments.yaml
+- ingresses.yaml

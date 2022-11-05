@@ -14,21 +14,21 @@ metadata:
   namespace: argocd
 spec:
   entryPoints:
-    - websecure
+  - websecure
   routes:
-    - kind: Rule
-      match: Host(`argocd.nghz.net`)
-      priority: 10
-      services:
-        - name: argocd-server
-          port: 80
-    - kind: Rule
-      match: Host(`argocd.nghz.net`) && Headers(`Content-Type`, `application/grpc`)
-      priority: 11
-      services:
-        - name: argocd-server
-          port: 80
-          scheme: h2c
+  - kind: Rule
+    match: Host(`argocd.nghz.net`)
+    priority: 10
+    services:
+    - name: argocd-server
+      port: 80
+  - kind: Rule
+    match: Host(`argocd.nghz.net`) && Headers(`Content-Type`, `application/grpc`)
+    priority: 11
+    services:
+    - name: argocd-server
+      port: 80
+      scheme: h2c
   tls:
     secretName: argocd-certificate
 ---
@@ -40,11 +40,11 @@ spec:
   entryPoints:
   - web
   routes:
-    - kind: Rule
-      match: Host(`argocd.nghz.net`)
-      priority: 1
-      middlewares:
-        - name: redirect-https
-      services:
-        - name: argocd-server
-          port: 80
+  - kind: Rule
+    match: Host(`argocd.nghz.net`)
+    priority: 1
+    middlewares:
+    - name: redirect-https
+    services:
+    - name: argocd-server
+      port: 80

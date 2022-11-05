@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nacos-cm
+  annotations:
+    avp.kubernetes.io/path: "mayongcong.net/data/mysql"
+data:
+  mysql.db.host: mysql-master
+  mysql.db.name: nacos
+  mysql.param: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+  mysql.password: <root-password>
+  mysql.port: "3306"
+  mysql.user: root
