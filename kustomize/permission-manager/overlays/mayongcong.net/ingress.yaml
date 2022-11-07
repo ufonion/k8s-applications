@@ -1,0 +1,59 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: permission-manager.mayongcong.net
+spec:
+  dnsNames:
+  - permission-manager.mayongcong.net
+  secretName: permission-manager.mayongcong.net
+  issuerRef:
+    name: ca # Use the issuer created previously
+    kind: ClusterIssuer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: permission-manager-https
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+  - hosts:
+      - permission-manager.mayongcong.net
+    secretName: permission-manager.mayongcong.net
+  rules:
+  - host: permission-manager.mayongcong.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: permission-manager
+            port:
+              number: 4000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: permission-manager
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-http-to-https@kubernetescrd
+spec:
+  rules:
+  - host: permission-manager.mayongcong.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: permission-manager
+            port:
+              number: 4000

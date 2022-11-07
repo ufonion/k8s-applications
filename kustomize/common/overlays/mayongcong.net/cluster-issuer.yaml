@@ -12,7 +12,7 @@ metadata:
   name: ca-key-pair
   namespace: cert-manager
   annotations:
-    avp.kubernetes.io/path: "nghz.net/data/certificates"
+    avp.kubernetes.io/path: "mayongcong.net/data/certificates"
 stringData:
   tls.crt: <ca.pem>
   tls.key: <ca-key.pem>

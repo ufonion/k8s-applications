@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: custom-ca
   annotations:
-    avp.kubernetes.io/path: "nghz.net/data/certificates"
+    avp.kubernetes.io/path: "mayongcong.net/data/certificates"
 data:
-  nghz.net.crt: <ca.pem>
+  mayongcong.net.crt: <ca.pem>

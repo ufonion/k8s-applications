@@ -1,0 +1,5 @@
+resources:
+  # - secret.yaml
+  - https://github.com/sighupio/permission-manager/releases/download/v1.7.1-rc1/crd.yml
+  - https://github.com/sighupio/permission-manager/releases/download/v1.7.1-rc1/seed.yml
+  - https://github.com/sighupio/permission-manager/releases/download/v1.7.1-rc1/deploy.yml

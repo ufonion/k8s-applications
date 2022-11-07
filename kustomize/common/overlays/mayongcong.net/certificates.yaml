@@ -1,15 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: common-certificates
+  name: omv-certificates
   namespace: common
 spec:
   dnsNames:
-  - vault.mayongcong.net
-  - s3.mayongcong.net
-  - s3-api.mayongcong.net
-  - vault.mayongcong.net
-  secretName: common-certificates
+  - openmediavault.mayongcong.net
+  secretName: omv-certificates
   issuerRef:
     name: ca # Use the issuer created previously
     kind: ClusterIssuer
