@@ -67,7 +67,7 @@ prometheus:
 
 service:
   # clusterIP: ""
-  # loadBalancerIP: ""
+  loadBalancerIP: 192.168.150.202
   # externalIPs: []
   # externalTrafficPolicy: ""
   # The name of the Service
@@ -126,23 +126,23 @@ servers:
   # - name: file
   #   parameters: /etc/coredns/mayongcong.net.db mayongcong.net
   - name: forward
-    parameters: . 192.168.110.1
+    parameters: . 192.168.150.1 114.114.114.114
   - name: cache
     parameters: 30
   - name: loop
   - name: reload
   - name: loadbalance
-- zones:
-  - zone: nghz.net
-  port: 53
-  plugins:
-  - name: forward
-    parameters: . 192.168.110.205
-  - name: cache
-    parameters: 30
-  - name: loop
-  - name: reload
-  - name: loadbalance
+# - zones:
+#   - zone: nghz.net
+#   port: 53
+#   plugins:
+#   - name: forward
+#     parameters: . 192.168.110.205
+#   - name: cache
+#     parameters: 30
+#   - name: loop
+#   - name: reload
+#   - name: loadbalance
 - zones:
   - zone: mayongcong.net
   port: 53
@@ -239,8 +239,12 @@ zoneFiles:
     mayongcong.net.          IN SOA sns.dns.icann.com. noc.dns.icann.com. 2015082541 7200 3600 1209600 3600
     mayongcong.net.          IN NS  b.iana-servers.net.
     mayongcong.net.          IN NS  a.iana-servers.net.
-    ns.mayongcong.net.       IN A   192.168.188.100
-    *.mayongcong.net.        IN A   192.168.188.150
+    ns.mayongcong.net.       IN A   192.168.150.202
+    openmediavault.mayongcong.net. IN A   192.168.150.100
+    retropie.mayongcong.net. IN A   192.168.150.101
+    fedora.mayongcong.net. IN A   192.168.150.30
+    router.mayongcong.net. IN A   192.168.150.1
+    *.mayongcong.net.        IN A   192.168.150.200
 
 # optional array of extra volumes to create
 extraVolumes: []

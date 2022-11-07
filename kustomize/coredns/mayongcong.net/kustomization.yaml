@@ -3,5 +3,5 @@ helmCharts:
   repo: https://coredns.github.io/helm
   version: 1.19.5
   releaseName: coredns
-  # namespace: common
+  namespace: kube-system
   valuesFile: coredns/values.yaml
